@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本地视频放映室</title>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="课程放映室首页"><span><span id="brandTitle">课程放映室</span><small id="brandSubtitle">把注意力留给这一课</small></span></a>
+    <div class="top-actions"><span class="local"><i></i>本地资料库</span><button id="refresh" class="quiet">↻ 刷新目录</button><button id="help" class="icon-button" aria-label="快捷键帮助">?</button></div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar" aria-label="课程目录">
+      <div class="library-head"><h2>我的课程</h2><span id="libraryCount">正在读取…</span></div>
+      <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索全部课程、章节或视频" aria-label="搜索全部课程、章节或视频"><kbd>/</kbd></label>
+      <label class="field-label" for="course">选择课程</label>
+      <select id="course" aria-label="选择课程"></select>
+      <div class="course-summary"><span id="courseCount"></span><button id="locate" class="text-button">定位当前课时</button></div>
+      <nav id="chapters" aria-label="章节与课时"></nav>
+      <div class="sidebar-foot">按原目录分章 · 按课时顺序播放</div>
+    </aside>
+    <main>
+      <div class="lesson-heading"><div><p id="breadcrumb" class="breadcrumb">本地课程</p><h1 id="lessonTitle">准备开始学习</h1></div><span id="lessonNumber" class="lesson-number"></span></div>
+      <section id="playerShell" class="player-shell" aria-label="视频播放器">
+        <video id="video" controls preload="metadata" playsinline aria-label="课程视频"></video>
+        <button id="startOverlay" class="start-overlay"><span class="play-circle">▶</span><strong id="startTitle">开始这一课</strong><span id="startHint">点击播放，进度会自动保存</span></button>
+        <div id="videoError" class="video-error" hidden><strong>暂时无法播放</strong><p id="errorText"></p><button id="retry">重新加载</button></div>
+      </section>
+      <div class="player-toolbar">
+        <div class="transport"><button id="previous" title="上一集（Shift + ←）">⏮ <span>上一集</span></button><button id="next" title="下一集（Shift + →）"><span>下一集</span> ⏭</button><span class="separator"></span><label class="speed-label" for="speed">倍速</label><select id="speed" aria-label="播放速度"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1.0×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2.0×</option><option value="2.5">2.5×</option><option value="3">3.0×</option></select></div>
+        <div class="view-tools"><button id="pip" class="quiet" title="画中画">▣ 画中画</button><button id="wide" class="quiet" aria-pressed="false" title="宽屏模式（T）">▭ 宽屏</button><button id="fullscreen" class="quiet" title="全屏（F）">⛶ 全屏</button></div>
+      </div>
+      <div class="play-settings"><label class="switch-label"><input id="autoplay" type="checkbox" checked role="switch"><span class="switch"></span>自动连播</label><select id="scope" aria-label="连续播放范围"><option value="course">本课程内连续播放</option><option value="all">整个资料库连续播放</option></select><span id="saveStatus">学习进度保存在本机浏览器</span></div>
+      <section class="up-next"><div><span class="section-caption">接下来</span><h2 id="nextTitle">正在读取课程…</h2><p id="nextChapter"></p></div><button id="playNext" class="next-play" aria-label="播放下一集">▶</button></section>
+      <footer class="learning-foot"><span><kbd>空格</kbd> 播放 / 暂停 <kbd>←</kbd><kbd>→</kbd> 快退 / 快进 5 秒 <kbd>F</kbd> 全屏</span><span id="progressSummary"></span></footer>
+      <p id="pageError" class="page-error" role="alert" hidden></p>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <dialog id="helpDialog"><button id="closeHelp" class="close-help" aria-label="关闭帮助">×</button><h2>顺手的播放方式</h2><dl><dt>空格 / K</dt><dd>播放或暂停</dd><dt>← / →</dt><dd>后退或前进 5 秒</dd><dt>↑ / ↓</dt><dd>增加或减小音量</dd><dt>Shift + ← / →</dt><dd>上一集或下一集</dd><dt>[ / ]</dt><dd>降低或提高倍速</dd><dt>F / T / M</dt><dd>全屏 / 宽屏 / 静音</dd><dt>/</dt><dd>搜索全部课程</dd></dl><p>自动保存每集进度、倍速和音量。再次打开时会回到上次的课时，点击即可继续。</p><p id="sourceHint">源视频位于「配置的视频目录」。新增视频后点击「刷新目录」。</p></dialog>
+</body>
+</html>
